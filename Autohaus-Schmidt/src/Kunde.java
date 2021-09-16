@@ -5,6 +5,7 @@ public class Kunde {
 
     // Constructor --> wird aufgerufen, wenn man eine neue Instanz eines Objektes erstellt
     // alles was in diesem Constructor steht muss auch in App java bei der Bezeichnung des Kunden stehen, sonst kommt ein Fehler
+    // public Kunde() ist eine Methodensigantur
     public Kunde(String vorname, String nachname){
         this.setVorname(vorname);
         this.setNachname(nachname);

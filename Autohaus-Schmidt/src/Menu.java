@@ -10,7 +10,7 @@ public class Menu {
 
 
     public void startMenu(){
-        
+        // TODO: StartMenu
         System.out.println("Bitte wähle aus");
         System.out.println("(1) Neuer Verkauf");
         System.out.println("(2) Neuer Kunde");
@@ -55,23 +55,27 @@ public class Menu {
     }
 
     public void createKundeMenu(){
+        // TODO: Kunde
         System.out.println("Create new Kunde");
-        System.out.println("Vorname");
+        System.out.println("Vorname: ");
         String vorname = getScanner().nextLine();
-        System.out.println("Nachname");
+        System.out.println("Nachname: ");
         String nachname = getScanner().nextLine();
 
-        Kunde k1 = new Kunde(vorname, nachname);
+        Kunde k = new Kunde(vorname, nachname);
+
+        System.out.println("Der neue Kunde heißt" + k.getVorname() + "Walker" + k.getNachname());
 
         startMenu();
     }
 
     public void createAutoMenu(){
+        // TODO: Auto
         System.out.println("Create new Auto");
-        System.out.print("Marke");
+        System.out.print("Marke: ");
         // Man ruft einfach immer wieder den Scanner auf
         String marke = getScanner().nextLine();
-        System.out.println("Modell");
+        System.out.println("Modell: ");
         String modell = getScanner().nextLine();
         System.out.println("Baujahr");
         String baujahr = getScanner().nextLine();
@@ -79,7 +83,7 @@ public class Menu {
         
 
         // Erstelltes Auto mit den Strings
-        Auto a1 = new Auto(marke, modell, baujahr);
+        Auto a = new Auto(marke, modell, baujahr);
 
         // Nach Ende der Erstellung des Autos soll einfach wieder an den Anfang gegangen werden
         startMenu();
@@ -87,28 +91,30 @@ public class Menu {
 
 
     public void createVerkaeuferMenu(){
+        // TODO: Verkaeufer
         System.out.println("Create new Verkäufer");
-        System.out.println("Vorname");
+        System.out.println("Vorname: ");
         String vorname = getScanner().nextLine();
-        System.out.println("Nachname");
+        System.out.println("Nachname: ");
         String nachname = getScanner().nextLine();
         
         
-        Verkaeufer v1 = new Verkaeufer(vorname, nachname);
+        Verkaeufer v = new Verkaeufer(vorname, nachname);
 
         startMenu();
     }
 
     public void createAutohausMenu(){
+        // TODO: Autohaus
         System.out.println("Create new Autohaus");
-        System.out.println("Name");
+        System.out.println("Name: ");
         String name = getScanner().nextLine();
-        System.out.println("Adresse");
+        System.out.println("Adresse: ");
         String adresse = getScanner().nextLine();
         System.out.println("Telefon");
         String telefon = getScanner().nextLine();
 
-        Autohaus ah1 = new Autohaus(name, adresse, telefon);
+        Autohaus ah = new Autohaus(name, adresse, telefon);
 
         startMenu();
     }
