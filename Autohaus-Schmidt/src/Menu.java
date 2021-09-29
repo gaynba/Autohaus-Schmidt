@@ -17,11 +17,14 @@ public class Menu {
         System.out.println("(3) Neues Auto");
         System.out.println("(4) Neuer Verkäufer");
         System.out.println("(5) Neues Autohaus");
+        System.out.println("(6) Neue Autoliste");
+        System.out.println("(7) Neue Kundenliste");
+        System.out.println("(8) Neue Verkaeuferliste");
         String choice = getScanner().nextLine();
         System.out.println("Deine Auswahl ist: " + choice);
     
         if(choice.equals("1")){
-            System.out.println("Verkauf noch nicht implementiert...");
+            createVerkaeufeMenu();
         }
         else if(choice.equals("2")){
             createKundeMenu();
@@ -35,23 +38,114 @@ public class Menu {
         }
         */
 
-        
         else if(choice.equals("4")){
             createVerkaeuferMenu();
         }
+
         else if(choice.equals("5")){
             createAutohausMenu();
         }
+
+        else if(choice.equals("6")){
+            showAutos();
+        }
+
+        else if(choice.equals("7")){
+            showKunden();
+        }
+
+        else if(choice.equals("8")){
+            showVerkaeufer();
+        }
+
         else {
-            System.out.println("Bitte nur 1,2,3,4,5 eingeben!");
+            System.out.println("Bitte nur 1-8 eingeben!");
         }
         startMenu();
     }
 
-    public void createVerkaufMenu(){
-        System.out.println("Create new Verkauf");
-        System.out.println("Autohaus");
+    public void createVerkaeufeMenu(){
+        //Auswahl des Preises
+        System.out.println("Bitte wähle einen Preis aus: ");
+        String preis = getScanner().next();
+        int preis = Integer.valueOf(preis);
         
+        
+        // Autos
+        //Index für Auswahl des richtigen Autos
+        int i = 0;
+        System.out.println("Bitte wählen sie ein Auto aus: ");
+        // Index atrtet bei null und wird dann um einen erhöht
+        for(Auto auto : App.getAllAutos()){
+            if(auto != null){
+                System.out.println(i + " - " + auto.getMarke() + " " + auto.getModell() + " " + auto.getBaujahr());
+                i++;
+            }
+        }
+        
+        String car_choice = getScanner().next();
+        int car_index = Integer.valueOf(car_choice);
+
+        System.out.println(App.getAllAutos() [car_index]);
+
+        i = 0;
+        System.out.println("Bitte wählen sie einen Käufer aus: ");
+        for(Kunde kunde : App.getAllKunden()){
+            if(kunde != null){
+                System.out.println(i + " " + kunde.getVorname() + " " + kunde.getNachname());
+                i++;
+            }
+        }
+        String kunde_choice = getScanner().next();
+        int kunde_index = Integer.valueOf(kunde_choice);
+
+        System.out.println(App.getAllKunden() [kunde_index]);
+        
+        i = 0;
+        System.out.println("Bitte wählen sie einen Verkäufer aus: ");
+        for(Verkaeufer verkaeufer : App.getAllVerkaeufer()){
+            if(verkaeufer != null){
+                System.out.println(i + " " + verkaeufer.getVorname() + " " + verkaeufer.getNachname());
+                i++;
+            }
+        }
+        String verkaeufer_choice = getScanner().next();
+        int verkaeufer_index = Integer.valueOf(verkaeufer_choice);
+
+        System.out.println(App.getAllVerkaeufer() [verkaeufer_index]);
+
+
+
+
+        //Hinzufügen in Array
+        App.addVerkauf(new Verkauf(App.getAllAutos()[car_index], App.getAllKunden()[kunde_index], App.getAllVerkaeufer()[verkaeufer_index]);
+
+        // Verkauf v = Verkauf(App.getAllAutos() [car_index]);
+        // HA: Das alles auf Verkäufer und Kunde übertragen, einem Verkauf final erstellen und einen Menüpunkt erstellen
+        // um alle Verkäufe auszugeben :) ! Achtung: Bei Verkauf muss auch ein int umgewandelt werden, damit wir einen Preis
+        // speichern können! "int _preis"?
+    }
+
+    public void showVerkaeufe(){
+        // TODO: Verkaufsliste
+        for(Verkauf verkauf : App.getAllVerkaeufe()){
+            if(verkauf != null){
+                System.out.println(verkauf);
+            }
+        }
+    }
+
+    /*Methodensigantur der Dienstlesitungsmethode public void showKunden --> Unterschied zum Constructor es fehlt das
+    void im Constructor */
+    public void showKunden(){
+        // TODO: Kundenliste
+        //Foreach Schleife
+        for(Kunde kunde : App.getAllKunden()){
+            // Wenn dieser Kunde nicht null ist geben wir den Vornamen aus
+            if(kunde != null){
+                System.out.println(kunde.getVorname() + " " + kunde.getNachname());
+            }
+        }
     }
 
     public void createKundeMenu(){
@@ -62,13 +156,28 @@ public class Menu {
         System.out.println("Nachname: ");
         String nachname = getScanner().nextLine();
 
-        Kunde k = new Kunde(vorname, nachname);
 
-        System.out.println("Der neue Kunde heißt" + k.getVorname() + "Walker" + k.getNachname());
+        // Erstellter Kunde mit den Strings aus App.java
+        App.addKunde(new Kunde(vorname, nachname));
 
+        System.out.println(App.getAllKunden());
+
+        // Nach Ende der Erstellung des Kunden soll einfach wieder an den Anfang gegangen werden
         startMenu();
+        
     }
 
+    public void showAutos(){
+        // TODO: Autoliste
+        //Foreach Schleife
+        for(Auto auto : App.getAllAutos()){
+            // Wenn dieses Auto nicht null ist geben wir die Marke aus
+            if(auto != null){
+                System.out.println(auto.getMarke() + " " + auto.getModell() + " " + auto.getBaujahr());
+            }
+        }        
+    }
+    
     public void createAutoMenu(){
         // TODO: Auto
         System.out.println("Create new Auto");
@@ -77,18 +186,30 @@ public class Menu {
         String marke = getScanner().nextLine();
         System.out.println("Modell: ");
         String modell = getScanner().nextLine();
-        System.out.println("Baujahr");
+        System.out.println("Baujahr: ");
         String baujahr = getScanner().nextLine();
 
         
 
-        // Erstelltes Auto mit den Strings
-        Auto a = new Auto(marke, modell, baujahr);
+        // Erstelltes Auto mit den Strings aus App.java
+        App.addAuto(new Auto(marke, modell, baujahr));
+
+        System.out.println(App.getAllAutos());
 
         // Nach Ende der Erstellung des Autos soll einfach wieder an den Anfang gegangen werden
         startMenu();
     }
 
+    public void showVerkaeufer(){
+        // TODO: Verkaeuferliste
+        //Foreach Schleife
+        for(Verkaeufer verkaeufer : App.getAllVerkaeufer()){
+            // Wenn dieser Verkaeufer nicht null ist geben wir den Vornamen aus
+            if(verkaeufer != null){
+                System.out.println(verkaeufer.getVorname() + " " + verkaeufer.getNachname());
+            }
+        }        
+    }
 
     public void createVerkaeuferMenu(){
         // TODO: Verkaeufer
@@ -98,10 +219,14 @@ public class Menu {
         System.out.println("Nachname: ");
         String nachname = getScanner().nextLine();
         
-        
-        Verkaeufer v = new Verkaeufer(vorname, nachname);
+        // Erstellter Verkaeufer mit den Strings aus App.java
+        App.addVerkaeufer(new Verkaeufer(vorname, nachname));
 
+        System.out.println(App.getAllVerkaeufer());
+
+        // Nach Ende der Erstellung des Verkaeufers soll einfach wieder an den Anfang gegangen werden
         startMenu();
+        
     }
 
     public void createAutohausMenu(){
@@ -118,6 +243,7 @@ public class Menu {
 
         startMenu();
     }
+    
 
     public Scanner getScanner() {
         return _scanner;
